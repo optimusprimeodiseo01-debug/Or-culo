@@ -1,0 +1,8 @@
+Token GitHub != acceso directo a contrato
+Token GitHub -> prueba firmada -> contrato
+
+Estado_valido = f(token, tiempo, permisos)
+Firma = sign(oracle, Estado_valido)
+
+Contrato acepta solo:
+  verify(Firma) == true

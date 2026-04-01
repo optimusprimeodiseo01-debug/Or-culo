@@ -1,0 +1,14 @@
+OFF-CHAIN                          ON-CHAIN
+        +---------------------+         +--------------------------+
+        |  GITHUB AUTH DAG    |         |   SMART CONTRACT         |
+        |                     |         |                          |
+        |  token = U ∩ A      | ----->  | verify(state)            |
+        |  validez temporal   |         | emitir_permiso()         |
+        |  refresh            |         | cobrar()                 |
+        +----------+----------+         +-----------+--------------+
+                   |                                |
+                   v                                v
+            +-------------+                +------------------+
+            |   ORACLE    |--------------->|   ESTADO LEGAL   |
+            | (firmante)  |                |   ON-CHAIN       |
+            +-------------+                +------------------+

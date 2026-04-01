@@ -1,0 +1,5 @@
+repo/
+├── cerebro/grafo/github_auth.dag
+├── cerebro/grafo/oracle.dag
+├── contratos/delegacion_github.sol
+├── raiz/ejecucion.dag   (actualizado)

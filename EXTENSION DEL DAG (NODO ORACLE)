@@ -1,0 +1,18 @@
+[GITHUB_AUTH_SUBGRAFO + ORACLE]
+
+        TOKEN_INTERSECT
+               |
+               v
+        +------------------+
+        | VALIDACION_LOCAL |
+        +--------+---------+
+                 |
+                 v
+        +------------------+
+        | ORACLE_FIRMA     |
+        +--------+---------+
+                 |
+                 v
+        +------------------+
+        | ENVIO_CONTRATO   |
+        +------------------+

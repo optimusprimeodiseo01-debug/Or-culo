@@ -1,0 +1,69 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract DelegacionGithub {
+
+    address public oracle;
+    mapping(address => uint256) public expiracion;
+    mapping(address => uint256) public nonces;
+
+    event AccesoConcedido(address user, uint256 exp);
+    event AccesoRevocado(address user);
+
+    constructor(address _oracle) {
+        oracle = _oracle;
+    }
+
+    function verificar(
+        address user,
+        uint256 exp,
+        uint256 nonce,
+        bytes memory firma
+    ) public returns (bool) {
+
+        require(block.timestamp < exp, "expirado");
+
+        bytes32 mensaje = keccak256(
+            abi.encodePacked(user, exp, nonce)
+        );
+
+        bytes32 ethSigned = keccak256(
+            abi.encodePacked("\x19Ethereum Signed Message:\n32", mensaje)
+        );
+
+        address signer = recover(ethSigned, firma);
+
+        require(signer == oracle, "firma invalida");
+
+        require(nonce > nonces[user], "replay detectado");
+
+        nonces[user] = nonce;
+        expiracion[user] = exp;
+
+        emit AccesoConcedido(user, exp);
+
+        return true;
+    }
+
+    function accesoValido(address user) public view returns (bool) {
+        return block.timestamp < expiracion[user];
+    }
+
+    function recover(bytes32 hash, bytes memory sig)
+        internal
+        pure
+        returns (address)
+    {
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+
+        assembly {
+            r := mload(add(sig, 32))
+            s := mload(add(sig, 64))
+            v := byte(0, mload(add(sig, 96)))
+        }
+
+        return ecrecover(hash, v, r, s);
+    }
+}

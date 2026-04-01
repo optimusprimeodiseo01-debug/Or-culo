@@ -1,0 +1,12 @@
+mensaje = {
+  user: address,
+  permisos: hash(P),
+  expiracion: t,
+  nonce: n
+}
+
+H = log(T)
+K = H - H^T
+L = i*(H - H^T)
+
+payload = hash(user, H, t, n)
